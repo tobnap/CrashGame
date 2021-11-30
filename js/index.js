@@ -52,12 +52,11 @@ function playCrash() {
 }
 
 var count = 0;
-var interval = 0.1;
 
 function updateGraph() {
     xValues = [];
     yValues = [];
-    generateData("Math.pow(1.1, 0.6*x)", 0, count/10, interval);
+    generateData("Math.pow(1.1, 0.6*x)", 0, count/10, 0.1);
 
     chart.data.labels = xValues;
     chart.data.datasets = [{
@@ -70,12 +69,6 @@ function updateGraph() {
     chart.options.scales.yAxes[0].ticks.max = yValues.at(-1);
 
     chart.update();
-
-    /*
-    if (count % 1000 == 1) {
-        interval *= 2;
-    }
-    */
 
     count++;
 }
