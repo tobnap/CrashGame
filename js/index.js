@@ -1,5 +1,8 @@
 var graphInterval;
+var multipler;
+var cashedOut = false;
 var count = 0;
+var coins = 10;
 
 var xValues = [];
 var yValues = [];
@@ -40,11 +43,33 @@ function generateData(value, i1, i2, step = 1) {
 }
 
 function playCrash() {
+    cashedOut = false;
+    multiplier = (Math.log(100/(Math.random()*99.9+0.1))/Math.log(1.1))/0.6*1000;
+
     graphInterval = setInterval(updateGraph, 100);
     setTimeout(function() {
         clearInterval(graphInterval);
-    }, (Math.log(100/(100/Math.random()*99.9+0.1))/Math.log(1.1))/0.6*1000);
+        
+        if(cashedOut == false) {
+            coins = 0;
+        }
+
+        cashedOut = true;
+    }, multiplier);
+
     count = 0;
+    multipler = 0;
+}
+
+function cashOut() {
+    var currentMultiplier = Math.pow(1.1, 0.6*count/10);
+
+    if (cashedOut == false) {
+        console.log(currentMultiplier);
+        coins *= currentMultiplier;
+        cashedOut = true;
+    }
+    console.log(coins);
 }
 
 function updateGraph() {
